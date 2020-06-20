@@ -42,6 +42,13 @@ def bullet(x,y,w,h):
     is_fire = 'fire'
     pygame.draw.rect(screen,(255,255,0),(x,y,w,h))
 
+def collision(ex,ey,bx,by):
+    distance = math.sqrt(math.pow(ex-bx,2) + math.pow(ey-by,2))
+    if distance<=20:
+        return True
+    else :
+        return False
+
 run = True
 
 while run:
@@ -79,12 +86,21 @@ while run:
         e_pos_x=3
         enemy_y+=e_pos_y
 
+    iscollision = collision(enemy_x,enemy_y,bullet_x,bullet_y)
+    if iscollision:
+        bullet_y = 350
+        is_fire = 'ready'
+        enemy_x = random.randint(0,500)
+        enemy_y = random.randint(0,100)
+
+
     if is_fire is 'fire':
         bullet(bullet_x,bullet_y,b_width,b_height)
         bullet_y -= b_pos_y
 
 
     if bullet_y<=0:
+        bullet_y = 350
         is_fire = 'ready'
 
 
